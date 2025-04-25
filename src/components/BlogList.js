@@ -7,10 +7,10 @@ import "../BlogList.css";
 
 
 const BlogList = ({ blogs, onDelete }) => {
-  const [loadingId, setLoadingId] = useState(null); // For showing loading state per blog
+  const [loadingId, setLoadingId] = useState(null); //this is the commit
   const [summary, setSummary] = useState();
   const [summaries, setSummaries] = useState({});
-  
+
 
 
   const handleDownloadPDF = (blog) => {
@@ -19,9 +19,9 @@ const BlogList = ({ blogs, onDelete }) => {
             <h3>AI Generated Blog</h3>
             <p><strong>Keywords:</strong> ${blog.keywords.join(", ")}</p>
             ${blog.content
-              .split("\n\n")
-              .map((p) => `<p>${p}</p>`)
-              .join("")}
+        .split("\n\n")
+        .map((p) => `<p>${p}</p>`)
+        .join("")}
         `;
 
     html2pdf()
@@ -61,38 +61,38 @@ const BlogList = ({ blogs, onDelete }) => {
     saveAs(blob, `blog-${blog._id}.docx`);
   };
 
-//   const handleGenerateSummary = async (blogId) => {
-//     setLoadingId(blogId);
-//     const reqData = {
-//         blogId: blogId,
-//         summary: summary
-//     }
-//     try {
-//       const res = await fetch(
-//         "http://localhost:5000/api/blogs/generate-summary",
-//         {
-//           method: "POST",
-//           headers: { "Content-Type": "application/json" },
-//           body: JSON.stringify(reqData),
-//         }
-//       );
+  //   const handleGenerateSummary = async (blogId) => {
+  //     setLoadingId(blogId);
+  //     const reqData = {
+  //         blogId: blogId,
+  //         summary: summary
+  //     }
+  //     try {
+  //       const res = await fetch(
+  //         "http://localhost:5000/api/blogs/generate-summary",
+  //         {
+  //           method: "POST",
+  //           headers: { "Content-Type": "application/json" },
+  //           body: JSON.stringify(reqData),
+  //         }
+  //       );
 
-//       const data = await res.json();
-//       console.log(data);
-//       setSummary(data.content);
+  //       const data = await res.json();
+  //       console.log(data);
+  //       setSummary(data.content);
 
-//       alert("AI Summary Blog generated!");
-//       // You can optionally reload the blog list or pass data to parent
-//       // e.g., onBlogGenerated(data);
-//     } catch (err) {
-//       console.error(err);
-//       alert("Failed to generate summary blog");
-//     } finally {
-//       setLoadingId(null);
-//     }
-//   };
+  //       alert("AI Summary Blog generated!");
+  //       // You can optionally reload the blog list or pass data to parent
+  //       // e.g., onBlogGenerated(data);
+  //     } catch (err) {
+  //       console.error(err);
+  //       alert("Failed to generate summary blog");
+  //     } finally {
+  //       setLoadingId(null);
+  //     }
+  //   };
 
-const handleGenerateSummary = async (blogId) => {
+  const handleGenerateSummary = async (blogId) => {
     setLoadingId(blogId);
     try {
       const res = await fetch("http://localhost:5000/api/blogs/generate-summary", {
@@ -100,16 +100,16 @@ const handleGenerateSummary = async (blogId) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ blogId }),
       });
-  
+
       const data = await res.json();
       console.log(data);
-  
+
       // Store summary only for the current blog
       setSummaries((prev) => ({
         ...prev,
         [blogId]: data.content,
       }));
-  
+
       alert("AI Summary Blog generated!");
     } catch (err) {
       console.error(err);
@@ -122,14 +122,14 @@ const handleGenerateSummary = async (blogId) => {
   const handleCopyToClipboard = (blog) => {
     const fullText = `Keywords: ${blog.keywords.join(', ')}\n\n${blog.content}`;
     navigator.clipboard.writeText(fullText)
-        .then(() => {
-            alert('Blog copied to clipboard!');
-        })
-        .catch((err) => {
-            console.error('Failed to copy:', err);
-            alert('Failed to copy blog');
-        });
-};
+      .then(() => {
+        alert('Blog copied to clipboard!');
+      })
+      .catch((err) => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy blog');
+      });
+  };
 
   return (
     <div className="blog-container">
@@ -163,12 +163,12 @@ const handleGenerateSummary = async (blogId) => {
                 {loadingId === blog._id ? "Summarizing..." : "AI Summary"}
               </button>
 
-               <button
-                                onClick={() => handleCopyToClipboard(blog)}
-                                className="btn grey"
-                            >
-                                Copy
-                            </button>
+              <button
+                onClick={() => handleCopyToClipboard(blog)}
+                className="btn grey"
+              >
+                Copy
+              </button>
             </div>
             <p>
               <strong>Keywords:</strong> {blog.keywords.join(", ")}
@@ -178,7 +178,7 @@ const handleGenerateSummary = async (blogId) => {
               <div>
                 <p>My Summary</p>
                 {summary}
-                
+
               </div>
             ) : null}
             {blog.content.split("\n\n").map((para, i) => (
