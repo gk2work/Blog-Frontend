@@ -4,7 +4,7 @@ import "../BlogList.css"
 const BlogForm = ({ onBlogGenerated }) => {
     const [keywords, setKeywords] = useState('');
     const [loading, setLoading] = useState(false);
-    const [lastBlogId, setLastBlogId] = useState(null); // <-- Store the last blog ID
+    const [lastBlogId, setLastBlogId] = useState(null);
     const [summaryLoading, setSummaryLoading] = useState(false);
 
     const handleSubmit = async (e) => {
